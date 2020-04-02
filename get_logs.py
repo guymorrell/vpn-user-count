@@ -5,11 +5,11 @@ from datetime import datetime, date, timedelta
 from argparse import ArgumentParser
 import json
 
-with open ("server.json", "rt") as server_f:
-    server_d = json.load(server_f)
-SERVER = server_d['SERVER']
-USERNAME = server_d['USERNAME']
 def get_logs():
+    with open ("server.json", "rt") as server_f:
+        server_d = json.load(server_f)
+    SERVER = server_d['SERVER']
+    USERNAME = server_d['USERNAME']
     parser = ArgumentParser("Usage:")
     parser.add_argument('-p', '--path', type=str, default='/var/log/syslog-ng/',
                         help='Path [OPTIONAL]')
@@ -22,12 +22,12 @@ def get_logs():
     args = parser.parse_args()
     now = datetime.now()
     # logs rotate at 06:00, today's date is always yesterday's log
-    today_ymd = now.strftime("%Y")+"-"+now.strftime("%m")+"-"+now.strftime("%d")+".gz"
+    today_ymd = now.strftime("%Y")+"-"+now.strftime("%m")+"-"+now.strftime("%d")
     server_path = args.server+':'+args.path
-    logfile = args.file+'-'+today_ymd
+    logfile = args.file+'-'+today_ymd+'.gz'
     arg = "scp "+USERNAME+'@'+server_path+logfile+" ./"
     if not os.path.exists(logfile):
         print("Copying "+logfile)
         os.system(arg)
-
+    return(str(args.file), today_ymd)
 get_logs()
