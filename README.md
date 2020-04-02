@@ -26,12 +26,12 @@ We are analysing loglines like this, pulling out a unique list of users per grou
 `Apr  2 09:09:50 vpn_hostname.domain %ASA-5-722033: Group <GROUP_NAME> User <USER_NAME> IP <IP_ADDRESS> MESSAGE`
 
 To get this, we need to pass the filename and its path on the syslog server to the script:
-`python vpn_user_count.py -f 'vpn_hostname.domain.log' -p '/var/log/syslog-ng/network/'`
+`python vpn_user_count.py -f 'vpn_hostname.domain.log' -p '/var/log/syslog-ng/VPN/'`
 
 #### Running the script
 This will print CSV style output for each log in the local dir. 
 ```
-$ python vpn_user_count.py -f 'hostname.domain.log' -p '/var/log/syslog-ng/VPN/'
+$ python vpn_user_count.py -f 'vpn_hostname.domain.log' -p '/var/log/syslog-ng/VPN/'
 Date, Group_BYOD, Group_CORP, 
 2020-04-01,99, 737, 
 2020-04-02,119, 859, 
